@@ -2,7 +2,6 @@ package br.com.desafiowebservices.views;
 
 import android.os.Bundle;
 
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -23,10 +22,10 @@ public class ImagePopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_image_popup);
 
         // Inicializa as views que serão utilizadas na activity
-        imageComic = findViewById(R.id.iconDetail);
+        imageComic = findViewById(R.id.imageComic);
         imageClose = findViewById(R.id.imageViewClose);
 
         // Pegamos o quadrinho que que foi clicado na imagem anterior
@@ -39,11 +38,6 @@ public class ImagePopupActivity extends AppCompatActivity {
                 .into(imageComic);
 
         // Adidionamos o evento de click para fechar-mos a tela
-        imageClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        imageClose.setOnClickListener(v -> finish());
     }
 }

@@ -57,8 +57,8 @@ public class DetailActivity extends AppCompatActivity {
         // Configuramos nas view os valores do quadrinho que pegamos
         textTitle.setText(result.getTitle());
         textViewDescription.setText(Html.fromHtml(result.getDescription()));
-        textViewPrice.setText("$" + result.getPrices().get(0).getPrice());
-        textViewPages.setText(result.getPageCount().toString());
+        textViewPrice.setText("Price: $ " + result.getPrices().get(0).getPrice());
+        textViewPages.setText("Pages: "+result.getPageCount());
 
         Picasso.get().load(result.getThumbnail().getPath() + "/portrait_incredible." + result.getThumbnail().getExtension())
                 .placeholder(R.drawable.marvel_logo)
@@ -85,36 +85,25 @@ public class DetailActivity extends AppCompatActivity {
 
         // Adicionamos o evendo se click na imagem para irmos para tela
         // que mostra a imagem inteira
-        imageHero.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, ImagePopupActivity.class);
-                intent.putExtra("image", result.getThumbnail().getPath() + "/detail." + result.getThumbnail().getExtension());
-                startActivity(intent);
-            }
+        imageHero.setOnClickListener(view -> {
+            Intent intent = new Intent(DetailActivity.this, ImagePopupActivity.class);
+            intent.putExtra("image", result.getThumbnail().getPath() + "/detail." + result.getThumbnail().getExtension());
+            startActivity(intent);
         });
 
         // Adicionamos o evento de click para finalizarmos a activity
-        imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                supportFinishAfterTransition();
-            }
-        });
+        imageBack.setOnClickListener(v -> supportFinishAfterTransition());
 
 
         // Adicionamos o evento de scroll, para mostrar ou não a imagem pequena do quadrinho
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (verticalOffset == 0) {
-                    imageHero.setVisibility(View.VISIBLE);
-                } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-                    imageHero.setVisibility(View.GONE);
-                    toolbar.setTitle(result.getTitle());
-                } else {
-                    imageHero.setVisibility(View.VISIBLE);
-                }
+        appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (verticalOffset == 0) {
+                imageHero.setVisibility(View.VISIBLE);
+            } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                imageHero.setVisibility(View.GONE);
+                toolbar.setTitle(result.getTitle());
+            } else {
+                imageHero.setVisibility(View.VISIBLE);
             }
         });
     }

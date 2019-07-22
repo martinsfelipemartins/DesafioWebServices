@@ -86,16 +86,16 @@ public class RecyclerviewHQsAdapter extends RecyclerView.Adapter<RecyclerviewHQs
                         .error(R.drawable.marvel_logo)
                         .into(imageHQHome);
 
-                numberHQHome.setText("# " + result.getIssueNumber());
+                numberHQHome.setText("#" + result.getIssueNumber());
             }
 
 
     }
 
-   /* public void clear() {
-        this.result.clear();
+    public void clear() {
+        this.results.clear();
         notifyDataSetChanged();
-    }*/
+    }
 
     public void update(List<Result> resultList) {
 

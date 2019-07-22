@@ -14,8 +14,9 @@
         android:src="@drawable/imagespidermansplash" />
 
     <ImageView
-        android:layout_width="227dp"
-        android:layout_height="96dp"
+        android:layout_width="203dp"
+        android:layout_height="90dp"
+        android:scaleType="fitXY"
         android:src="@drawable/marvel_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageSplash" />
