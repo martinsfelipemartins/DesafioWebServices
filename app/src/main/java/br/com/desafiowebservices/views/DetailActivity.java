@@ -97,7 +97,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // Adicionamos o evento de scroll, para mostrar ou não a imagem pequena do quadrinho
         appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-            if (verticalOffset == 0) {
+            if (verticalOffset == 0&&imageHero!=null) {
                 imageHero.setVisibility(View.VISIBLE);
             } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
                 imageHero.setVisibility(View.GONE);

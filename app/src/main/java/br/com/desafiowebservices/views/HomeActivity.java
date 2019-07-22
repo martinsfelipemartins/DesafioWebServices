@@ -15,7 +15,6 @@ import java.util.List;
 
 import br.com.desafiowebservices.R;
 import br.com.desafiowebservices.adapters.RecyclerviewHQsAdapter;
-import br.com.desafiowebservices.interfaces.RecyclerviewClickListener;
 import br.com.desafiowebservices.pojo.Result;
 import br.com.desafiowebservices.viewlmodel.HQViewModel;
 
