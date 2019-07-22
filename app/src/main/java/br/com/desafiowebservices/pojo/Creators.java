@@ -1,10 +1,13 @@
 
 package br.com.desafiowebservices.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
-public class Creators {
+public class Creators implements Parcelable {
 
     @Expose
     private String available;
@@ -14,6 +17,25 @@ public class Creators {
     private List<Item> items;
     @Expose
     private String returned;
+
+    protected Creators(Parcel in) {
+        available = in.readString();
+        collectionURI = in.readString();
+        items = in.createTypedArrayList(Item.CREATOR);
+        returned = in.readString();
+    }
+
+    public static final Creator<Creators> CREATOR = new Creator<Creators>() {
+        @Override
+        public Creators createFromParcel(Parcel in) {
+            return new Creators(in);
+        }
+
+        @Override
+        public Creators[] newArray(int size) {
+            return new Creators[size];
+        }
+    };
 
     public String getAvailable() {
         return available;
@@ -47,4 +69,16 @@ public class Creators {
         this.returned = returned;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(available);
+        dest.writeString(collectionURI);
+        dest.writeTypedList(items);
+        dest.writeString(returned);
+    }
 }

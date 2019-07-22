@@ -2,12 +2,14 @@
 package br.com.desafiowebservices.pojo;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-public class Result {
+public class Result implements Parcelable {
 
     @Expose
     private Characters characters;
@@ -67,6 +69,45 @@ public class Result {
     private String variantDescription;
     @Expose
     private List<Variant> variants;
+
+    protected Result(Parcel in) {
+        characters = in.readParcelable(Characters.class.getClassLoader());
+        collectedIssues = in.createTypedArrayList(CollectedIssue.CREATOR);
+        collections = in.createTypedArrayList(Collection.CREATOR);
+        dates = in.createTypedArrayList(Date.CREATOR);
+        description = in.readString();
+        diamondCode = in.readString();
+        digitalId = in.readString();
+        ean = in.readString();
+        format = in.readString();
+        id = in.readString();
+        images = in.createTypedArrayList(Image.CREATOR);
+        isbn = in.readString();
+        issn = in.readString();
+        issueNumber = in.readString();
+        modified = in.readString();
+        pageCount = in.readString();
+        prices = in.createTypedArrayList(Price.CREATOR);
+        resourceURI = in.readString();
+        series = in.readParcelable(Series.class.getClassLoader());
+        stories = in.readParcelable(Stories.class.getClassLoader());
+        thumbnail = in.readParcelable(Thumbnail.class.getClassLoader());
+        title = in.readString();
+        upc = in.readString();
+        variantDescription = in.readString();
+    }
+
+    public static final Creator<Result> CREATOR = new Creator<Result>() {
+        @Override
+        public Result createFromParcel(Parcel in) {
+            return new Result(in);
+        }
+
+        @Override
+        public Result[] newArray(int size) {
+            return new Result[size];
+        }
+    };
 
     public Characters getCharacters() {
         return characters;
@@ -252,7 +293,7 @@ public class Result {
         this.textObjects = textObjects;
     }
 
-    public Uri getThumbnail() {
+    public Thumbnail getThumbnail() {
         return thumbnail;
     }
 
@@ -300,4 +341,36 @@ public class Result {
         this.variants = variants;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(characters, flags);
+        dest.writeTypedList(collectedIssues);
+        dest.writeTypedList(collections);
+        dest.writeTypedList(dates);
+        dest.writeString(description);
+        dest.writeString(diamondCode);
+        dest.writeString(digitalId);
+        dest.writeString(ean);
+        dest.writeString(format);
+        dest.writeString(id);
+        dest.writeTypedList(images);
+        dest.writeString(isbn);
+        dest.writeString(issn);
+        dest.writeString(issueNumber);
+        dest.writeString(modified);
+        dest.writeString(pageCount);
+        dest.writeTypedList(prices);
+        dest.writeString(resourceURI);
+        dest.writeParcelable(series, flags);
+        dest.writeParcelable(stories, flags);
+        dest.writeParcelable(thumbnail, flags);
+        dest.writeString(title);
+        dest.writeString(upc);
+        dest.writeString(variantDescription);
+    }
 }

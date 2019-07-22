@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+    tools:context="br.com.desafiowebservices.views.DetailActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        style="@style/AppTheme.AppBarOverlay"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
+
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageBackground"
+                android:layout_width="match_parent"
+                android:layout_height="307dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/imagespidermansplash" />
+
+
+            <ImageView
+                android:id="@+id/imageBack"
+                android:layout_width="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+
+                />
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include layout="@layout/content_detail">
+
+    </include>
+
+
+    <ImageView
+        android:id="@+id/iconDetail"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="85dp"
+        android:background="@drawable/edge_for_images_home"
+        android:padding="3dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/imagespidermansplash" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

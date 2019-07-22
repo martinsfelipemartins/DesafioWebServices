@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import br.com.desafiowebservices.MainActivity;
 import br.com.desafiowebservices.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -41,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void jump() {
         timer.cancel();
-        Intent goToMainActivity = new Intent(this, MainActivity.class);
+        Intent goToMainActivity = new Intent(this, HomeActivity.class);
         startActivity(goToMainActivity);
         finish();
     }

@@ -1,34 +1,58 @@
 package br.com.desafiowebservices.viewlmodel;
 
+import android.app.Application;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import java.util.List;
+
 import br.com.desafiowebservices.data.network.ApiService;
+import br.com.desafiowebservices.pojo.Result;
+import br.com.desafiowebservices.repository.HQrepository;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static br.com.desafiowebservices.utils.AppUtil.md5;
 
-public class HQViewModel {
-    // CompositeDisposable para adicionarmos as chamadas do RXJava
+public class HQViewModel extends AndroidViewModel {// Variáveis que serão usadas para buscar os quadrinhos na API
+    private MutableLiveData<List<Result>> _resultLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> _loading = new MutableLiveData<>();
     private CompositeDisposable disposable = new CompositeDisposable();
-    // Parâmetros necessários para requisição da API MARVEL
-// Chave pública que será usada como como parâmetro
-    public static final String PUBLIC_KEY = "6eb7e8896ec5850c52515a8a23ee97f0";
-    // Chave privada que será usada como como parâmetro
-    public static final String PRIVATE_KEY = "0dd0c16fedb8a02985977eafca66b49f5e6a526f";
-    // Timestamp do horário da requisição
-    String ts = Long.toString(System.currentTimeMillis() / 1000);
-    // Hash criacom com as chaves pública e privada e o timestamp
-    String hash = md5(ts + PRIVATE_KEY + PUBLIC_KEY);
+    private HQrepository repository = new HQrepository();
+
+    // Construtor padrão do viewmodel
+    public HQViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+
+    public LiveData<List<Result>> getResults() {
+        return _resultLiveData;
+    }
+
+    public LiveData<Boolean> isLoading(){
+        return _loading;
+    }
 
     public void getComics() {
-        disposable.add(
-                ApiService.getApiService().getComics("magazine", "comic", true, "focDate", ts, hash, PUBLIC_KEY, PRIVATE_KEY)
 
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(response -> Log.i("LOG", "Success: " + response), throwable -> Log.i("LOG", "Error: " + throwable.getMessage())));
+        // Adicionamos a chamada a um disposible para podermos eliminar o disposable da destruição do viewmodel
+        disposable.add(repository.getComics()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable1 -> _loading.setValue(true))
+                .doAfterTerminate(() -> _loading.setValue(false))
+                .subscribe(response -> {
+                    // Chegou aqui então alteramos o live data, assim a View que está observando ele pode atualizar a tela
+                    _resultLiveData.setValue(response.getData().getResults());
+                }, throwable -> {
+                    Log.i("LOG", "Error: " + throwable.getMessage());
+                }));
     }
 }
 

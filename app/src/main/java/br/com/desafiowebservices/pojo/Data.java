@@ -1,12 +1,15 @@
 
 package br.com.desafiowebservices.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
 
-public class Data {
+public class Data implements Parcelable {
 
     @Expose
     private String count;
@@ -18,6 +21,40 @@ public class Data {
     private List<Result> results;
     @Expose
     private String total;
+
+    protected Data(Parcel in) {
+        count = in.readString();
+        limit = in.readString();
+        offset = in.readString();
+        results = in.createTypedArrayList(Result.CREATOR);
+        total = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(count);
+        dest.writeString(limit);
+        dest.writeString(offset);
+        dest.writeTypedList(results);
+        dest.writeString(total);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Data> CREATOR = new Creator<Data>() {
+        @Override
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        @Override
+        public Data[] newArray(int size) {
+            return new Data[size];
+        }
+    };
 
     public String getCount() {
         return count;

@@ -13,4 +13,11 @@
         android:scaleType="centerCrop"
         android:src="@drawable/imagespidermansplash" />
 
+    <ImageView
+        android:layout_width="227dp"
+        android:layout_height="96dp"
+        android:src="@drawable/marvel_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageSplash" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

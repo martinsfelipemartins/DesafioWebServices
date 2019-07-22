@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".views.HomeActivity">
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +21,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/recyclerview_home_item" />
+    <include layout="@layout/recyclerview_home" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

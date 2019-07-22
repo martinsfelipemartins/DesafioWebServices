@@ -1,9 +1,12 @@
 
 package br.com.desafiowebservices.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 
-public class TextObject {
+public class TextObject implements Parcelable {
 
     @Expose
     private String language;
@@ -11,6 +14,24 @@ public class TextObject {
     private String text;
     @Expose
     private String type;
+
+    protected TextObject(Parcel in) {
+        language = in.readString();
+        text = in.readString();
+        type = in.readString();
+    }
+
+    public static final Creator<TextObject> CREATOR = new Creator<TextObject>() {
+        @Override
+        public TextObject createFromParcel(Parcel in) {
+            return new TextObject(in);
+        }
+
+        @Override
+        public TextObject[] newArray(int size) {
+            return new TextObject[size];
+        }
+    };
 
     public String getLanguage() {
         return language;
@@ -36,4 +57,15 @@ public class TextObject {
         this.type = type;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(language);
+        dest.writeString(text);
+        dest.writeString(type);
+    }
 }
